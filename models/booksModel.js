@@ -2,6 +2,11 @@ const mongoose = require('mongoose')
 
 const BooksSchema =mongoose.Schema(
     {
+        id:{
+            type: String,
+            required:[true],
+            unique: true
+        },
         title:{
             type: String,
             required:[true,"Please enter a Book Name"]
@@ -12,10 +17,6 @@ const BooksSchema =mongoose.Schema(
         },
         publishedYear:{
             type: Number,
-            required:[true]
-        },
-        id:{
-            type: String,
             required:[true]
         }
     }

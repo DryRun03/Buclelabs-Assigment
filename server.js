@@ -7,6 +7,8 @@ const Books = require('./models/booksModel')
 app.use(express.json());
 //routes
 
+
+//Add Books to the DB
 app.post('/books',async(req,res)=>{
     try {
         const books = await Books.create(req.body);
@@ -14,6 +16,27 @@ app.post('/books',async(req,res)=>{
     } catch (error) {
         console.log(error.message);
         res.status(500).json({message: error.message})
+    }
+})
+
+//Get All books
+app.get('/books',async(req,res)=>{
+    try {
+        const books = await Books.find({});
+        res.status(200).json(books);
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+})
+
+//Get Books By Id
+app.get('/books/:id',async(req,res)=>{
+    try {
+        const {id}=req.params;
+        const books = await Books.findOne({ id });
+        res.status(200).json(books);
+    } catch (error) {
+        res.status(500).json(error.message);
     }
 })
 
