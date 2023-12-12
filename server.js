@@ -53,7 +53,23 @@ app.put('/books/:id',async(req,res)=>{
         if (updatedBook) {
             res.status(200).json(updatedBook);
         } else {
-            res.status(404).json({ message: 'Book not found' });
+            res.status(404).json({ message: 'Book not found with this id' });
+        }
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+})
+
+
+//Delete Books API by Id
+app.delete('/book/:id',async(req,res)=>{
+    try {
+        const {id} = req.params;
+        const book = await Books.findOneAndDelete({id});
+        if(book){
+            res.status(200).json(book);
+        }else{
+            res.status(404).json("Book not found with this id");
         }
     } catch (error) {
         res.status(500).json(error.message);
