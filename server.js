@@ -36,6 +36,26 @@ app.get('/books/:id',async(req,res)=>{
         const books = await Books.findOne({ id });
         res.status(200).json(books);
     } catch (error) {
+        res.status(404).json("Book with this id not found");
+    }
+})
+
+
+// Update/edit Books by Id
+app.put('/books/:id',async(req,res)=>{
+    try {
+        const {id} = req.params;
+        const updatedBook = await Books.findOneAndUpdate(
+            { id },
+            req.body,
+            { new: true, runValidators: true }
+        );
+        if (updatedBook) {
+            res.status(200).json(updatedBook);
+        } else {
+            res.status(404).json({ message: 'Book not found' });
+        }
+    } catch (error) {
         res.status(500).json(error.message);
     }
 })
