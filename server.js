@@ -1,8 +1,11 @@
+require('dotenv').config()
 const express= require('express')
 const mongoose = require('mongoose')
 const app = express()
 const Books = require('./models/booksModel')
 
+const MONGO_URL = process.env.MONGO_URL;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 //routes
@@ -76,10 +79,10 @@ app.delete('/book/:id',async(req,res)=>{
     }
 })
 
-mongoose.connect('mongodb+srv://pankajgarggarg03:s1MWiXQop2DhDPP1@cluster0.jnwj70s.mongodb.net/Node-API?retryWrites=true&w=majority')
+mongoose.connect(MONGO_URL)
 .then(()=>{
-    app.listen(3000,()=>{
-        console.log('Node API app is running on port 3000')
+    app.listen(PORT,()=>{
+        console.log('Node API app is running on port ${PORT}')
     });
     console.log('Connected to MongoDB')
 }).catch((error)=>{
